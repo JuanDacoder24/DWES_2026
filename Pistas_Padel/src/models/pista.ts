@@ -21,9 +21,9 @@ Pista.init(
             allowNull: false,
         },
         tipo:{
-            type: DataTypes.BOOLEAN,
+            type: DataTypes.ENUM('INDOOR' , 'OUTDOOR '),
             allowNull: false,
-            //indicar una de las dos opciones
+            defaultValue: 'INDOOR'
         }
     },
     {
@@ -31,4 +31,5 @@ Pista.init(
         tableName: 'pistas',
     }
 )
+export default Pista
 
