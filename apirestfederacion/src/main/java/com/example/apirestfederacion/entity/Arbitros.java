@@ -1,5 +1,6 @@
 package com.example.apirestfederacion.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -15,8 +16,14 @@ public class Arbitros {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "nombre", nullable = false)
     private String nombre;
+
+    @Column(name = "apellido1", nullable = false)
     private String apellido1;
+    
+    @Column(name = "apellido2", nullable = false)
     private String apellido2;
     
     @Enumerated(EnumType.STRING)
