@@ -4,18 +4,23 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "jugadores")
-public class Jugadores {
+public class Jugador {
 
-    @Id 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Id
+    @Column(name = "id", length = 36, columnDefinition = "CHAR(36)")
+    private String id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "equipo_id", nullable = false)
+    private Equipo equipo;
 
     @Column(name = "dorsal", nullable = false)
     private int dorsal;
@@ -32,7 +37,11 @@ public class Jugadores {
     @Enumerated(EnumType.STRING)
     private Posicion posicion;
 
-    public Jugadores(Long id, int dorsal, String nombre, String apellido1, String apellido2, Posicion posicion) {
+    public Jugador(){
+
+    }
+
+    public Jugador(String id, int dorsal, String nombre, String apellido1, String apellido2, Posicion posicion) {
         this.id = id;
         this.dorsal = dorsal;
         this.nombre = nombre;
@@ -41,11 +50,11 @@ public class Jugadores {
         this.posicion = posicion;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -89,5 +98,14 @@ public class Jugadores {
         this.posicion = posicion;
     }
 
+    public Equipo getEquipo() {
+        return equipo;
+    }
+
+    public void setEquipo(Equipo equipo) {
+        this.equipo = equipo;
+    }
+
+    
     
 }

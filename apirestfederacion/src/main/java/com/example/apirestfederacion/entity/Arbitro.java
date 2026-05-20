@@ -1,22 +1,21 @@
 package com.example.apirestfederacion.entity;
 
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "arbitros")
-public class Arbitros {
+public class Arbitro {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    @Column(name = "id", length = 36, columnDefinition = "CHAR(36)")
+    private String id;
+    
     @Column(name = "nombre", nullable = false)
     private String nombre;
 
@@ -29,10 +28,10 @@ public class Arbitros {
     @Enumerated(EnumType.STRING)
     private Rol rol;
 
-    public Arbitros() {
+    public Arbitro() {
     }
 
-    public Arbitros(Long id, String nombre, String apellido1, String apellido2, Rol rol) {
+    public Arbitro(String id, String nombre, String apellido1, String apellido2, Rol rol) {
         this.id = id;
         this.nombre = nombre;
         this.apellido1 = apellido1;
@@ -40,11 +39,11 @@ public class Arbitros {
         this.rol = rol;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

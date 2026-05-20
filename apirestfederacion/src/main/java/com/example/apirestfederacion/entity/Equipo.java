@@ -2,18 +2,16 @@ package com.example.apirestfederacion.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "equipos")
-public class Equipos {
+public class Equipo {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "id", length = 36, columnDefinition = "CHAR(36)")
+    private String id;
 
     @Column(name = "nombre_equipo", nullable = false)
     private String nombreEquipo;
@@ -21,20 +19,24 @@ public class Equipos {
     @Column(name = "sede", nullable = false)
     private String sede;
 
+    public Equipo(){
+        
+    }
 
-    public Equipos(Long id, String nombreEquipo, String sede) {
+
+    public Equipo(String id, String nombreEquipo, String sede) {
         this.id = id;
         this.nombreEquipo = nombreEquipo;
         this.sede = sede;
     }
 
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
