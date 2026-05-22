@@ -36,7 +36,7 @@ public class FederacionService {
         return equipoRepository.findAll();
     }
 
-    public Optional<Equipo> getEquipoById(Long id) {
+    public Optional<Equipo> getEquipoById(String id) {
         return equipoRepository.findById(id);
     }
 
@@ -44,14 +44,14 @@ public class FederacionService {
         return equipoRepository.save(equipo); // Devolvemos el guardado para tener su ID
     }
 
-    public Optional<Equipo> actualizarNombreEquipo(Long id, String nombreEquipo) {
+    public Optional<Equipo> actualizarNombreEquipo(String id, String nombreEquipo) {
         return equipoRepository.findById(id).map(equipo -> {
             equipo.setNombreEquipo(nombreEquipo);
             return equipoRepository.save(equipo);
         });
     }
 
-    public boolean eliminarEquipo(Long id) {
+    public boolean eliminarEquipo(String id) {
         if (equipoRepository.existsById(id)) {
             // Lógica combinada: Si eliminamos el equipo, los jugadores quedan libres
             List<Jugador> jugadores = jugadorRepository.findByEquipo(equipoRepository.findById(id).get());
@@ -69,7 +69,7 @@ public class FederacionService {
         return jugadorRepository.findAll();
     }
 
-    public List<Jugador> getJugadoresPorEquipo(Long equipoId) {
+    public List<Jugador> getJugadoresPorEquipo(String equipoId) {
         return equipoRepository.findById(equipoId)
                 .map(jugadorRepository::findByEquipo)
                 .orElse(List.of());
@@ -87,7 +87,7 @@ public class FederacionService {
         return jugadorRepository.save(jugador);
     }
 
-    public Optional<Jugador> actualizarEquipoJugador(String jugadorId, Long equipoId) {
+    public Optional<Jugador> actualizarEquipoJugador(String jugadorId, String equipoId) {
         Optional<Jugador> jugadorOpt = jugadorRepository.findById(jugadorId);
         Optional<Equipo> equipoOpt = equipoRepository.findById(equipoId);
 

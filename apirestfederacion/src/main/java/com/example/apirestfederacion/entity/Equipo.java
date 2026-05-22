@@ -2,6 +2,8 @@ package com.example.apirestfederacion.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
@@ -10,6 +12,7 @@ import jakarta.persistence.Table;
 public class Equipo {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", length = 36, columnDefinition = "CHAR(36)")
     private String id;
 
@@ -19,10 +22,9 @@ public class Equipo {
     @Column(name = "sede", nullable = false)
     private String sede;
 
-    public Equipo(){
-        
-    }
+    public Equipo() {
 
+    }
 
     public Equipo(String id, String nombreEquipo, String sede) {
         this.id = id;
@@ -30,36 +32,28 @@ public class Equipo {
         this.sede = sede;
     }
 
-
     public String getId() {
         return id;
     }
-
 
     public void setId(String id) {
         this.id = id;
     }
 
-
     public String getNombreEquipo() {
         return nombreEquipo;
     }
-
 
     public void setNombreEquipo(String nombreEquipo) {
         this.nombreEquipo = nombreEquipo;
     }
 
-
     public String getSede() {
         return sede;
     }
 
-
     public void setSede(String sede) {
         this.sede = sede;
     }
-
-    
 
 }

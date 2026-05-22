@@ -31,7 +31,7 @@ public class EquiposController {
     }
 
     @GetMapping("/equipos/{id}")
-    public ResponseEntity<Equipo> getEquipoById(@PathVariable Long id) {
+    public ResponseEntity<Equipo> getEquipoById(@PathVariable String id) {
         return service.getEquipoById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -43,14 +43,24 @@ public class EquiposController {
     }
 
     @PutMapping("/equipos/{id}")
-    public ResponseEntity<Equipo> actualizarEquipo(@PathVariable Long id, @RequestParam String nombre) {
+    public ResponseEntity<Equipo> actualizarEquipo(@PathVariable String id, @RequestParam String nombre) {
         return service.actualizarNombreEquipo(id, nombre)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    //     Opción A: Modificar el JSON en Postman (La más rápida para probar)
+// Si no quieres tocar tu código Java ahora mismo, tienes que enviarle el parámetro tal como lo pide tu @RequestParam.
+// En Postman, cambia la pestaña Body a none.
+// Ve a la pestaña Params (justo debajo de la URL).
+// Añade una fila donde la clave (Key) sea nombre y el valor (Value) sea Sporting Cristal.
+// Tu URL se verá automáticamente así:
+// http://localhost:8080/api/equipos/13e1aece-e919-4e54-bd09-1b9b76d5dfde?nombre=Sporting+Cristal
+// (Ten en cuenta que con esta opción la sede no se actualizará, ya que tu método Java solo recibe el nombre).
+
+
     @DeleteMapping("/equipos/{id}")
-    public ResponseEntity<Void> eliminarEquipo(@PathVariable Long id){
+    public ResponseEntity<Void> eliminarEquipo(@PathVariable String id){
         if (service.eliminarEquipo(id)) {
             return ResponseEntity.noContent().build(); 
         }

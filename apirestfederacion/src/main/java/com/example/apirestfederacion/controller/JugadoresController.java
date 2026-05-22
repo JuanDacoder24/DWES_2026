@@ -36,7 +36,7 @@ public class JugadoresController {
     }
 
     @GetMapping("/equipos/{equipoId}/jugadores")
-    public ResponseEntity<List<Jugador>> getJugadoresPorEquipo(@PathVariable Long equipoId) {
+    public ResponseEntity<List<Jugador>> getJugadoresPorEquipo(@PathVariable String equipoId) {
         List<Jugador> jugadores = service.getJugadoresPorEquipo(equipoId);
         if (jugadores.isEmpty()) {
             return ResponseEntity.noContent().build();
@@ -55,11 +55,13 @@ public class JugadoresController {
     }
 
     @PutMapping("/jugadores/{jugadorId}/equipo/{equipoId}")
-    public ResponseEntity<Jugador> ficharJugador(@PathVariable String jugadorId, @PathVariable Long equipoId) {
+    public ResponseEntity<Jugador> ficharJugador(@PathVariable String jugadorId, @PathVariable String equipoId) {
         return service.actualizarEquipoJugador(jugadorId, equipoId)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
+
+
 
     @PutMapping("/jugadores/{jugadorId}/liberar")
     public ResponseEntity<Jugador> liberarJugador(@PathVariable String jugadorId) {
