@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.apirestfederacion.dto.PartidoDetalleResponse;
+import com.example.apirestfederacion.dto.PartidoRequest;
 import com.example.apirestfederacion.entity.Partido;
 import com.example.apirestfederacion.services.FederacionService;
 
@@ -43,6 +45,11 @@ public class PartidosController {
     @PostMapping("/partidos")
     public ResponseEntity<Partido> addPartido(@RequestBody Partido partido){
         return ResponseEntity.status(HttpStatus.CREATED).body(service.addPartido(partido));
+    }
+
+    @PostMapping("/partidos/crear")
+    public ResponseEntity<PartidoDetalleResponse> crearPartidoDesdeIds(@RequestBody PartidoRequest request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.crearPartidoDesdeIds(request));
     }
 
     @DeleteMapping("/partidos/{id}")

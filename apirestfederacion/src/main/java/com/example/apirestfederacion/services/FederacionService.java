@@ -4,8 +4,14 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
+import com.example.apirestfederacion.dto.ArbitroDto;
+import com.example.apirestfederacion.dto.JugadorDto;
+import com.example.apirestfederacion.dto.PartidoDetalleResponse;
+import com.example.apirestfederacion.dto.PartidoRequest;
 import com.example.apirestfederacion.entity.Arbitro;
 import com.example.apirestfederacion.entity.Equipo;
 import com.example.apirestfederacion.entity.Jugador;
@@ -147,6 +153,40 @@ public class FederacionService {
 
     public List<Partido> getPartidosPorEquipo(String equipoId) {
         return partidoRepository.buscarPartidosPorEquipo(equipoId);
+    }
+
+    public PartidoDetalleResponse crearPartidoDesdeIds(PartidoRequest request) {
+        Equipo equipo1 = equipoRepository.findById(request.getEquipo1())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Equipo1 no encontrado"));
+        Equipo equipo2 = equipoRepository.findById(request.getEquipo2())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Equipo2 no encontrado"));
+        Arbitro arbitro1 = arbitroRepository.findById(request.getArbitro1())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Árbitro1 no encontrado"));
+        Arbitro arbitro2 = arbitroRepository.findById(request.getArbitro2())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Árbitro2 no encontrado"));
+
+        if (equipo1.getId().equals(equipo2.getId())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Los equipos deben ser distintos");
+        }
+
+        if (arbitro1.getId().equals(arbitro2.getId())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Los árbitros deben ser distintos");
+        }
+
+        Partido partido = new Partido(null, equipo1, equipo2, arbitro1, arbitro2);
+        Partido guardado = partidoRepository.save(partido);
+
+        List<ArbitroDto> arbitros = List.of(ArbitroDto.from(arbitro1), ArbitroDto.from(arbitro2));
+        List<JugadorDto> jugadoresEquipo1 = jugadorRepository.findByEquipo(equipo1)
+                .stream()
+                .map(JugadorDto::from)
+                .toList();
+        List<JugadorDto> jugadoresEquipo2 = jugadorRepository.findByEquipo(equipo2)
+                .stream()
+                .map(JugadorDto::from)
+                .toList();
+
+        return PartidoDetalleResponse.from(guardado, arbitros, jugadoresEquipo1, jugadoresEquipo2);
     }
 
     public Partido addPartido(Partido partido) {
