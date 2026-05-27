@@ -1,5 +1,7 @@
 package com.example.centroformacion.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -13,6 +15,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "cursos")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Curso {
 
     @Id
@@ -21,10 +24,14 @@ public class Curso {
     private String id;
 
     @Column(name = "nombre_curso", nullable = false)
-    private String nombre_curso;
+    private String nombreCurso;
 
     @Column(name = "horas", nullable = false)
     private int horas;
+
+    //SI LO QUE SE QUIERE ES CREAR UN CURSO NUEVO CON PROFESORES NUEVOS Y AULAS NUEVAS, 
+    //SE PONDRIA 
+    //@ManyToOne(cascade = CascadeType.PERSIST
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "profesor_id", nullable = false)
@@ -34,9 +41,12 @@ public class Curso {
     @JoinColumn(name = "aula_id", nullable = false)
     private Aula aulas;
 
-    public Curso(String id, String nombre_curso, int horas, Profesor profesores, Aula aulas) {
+    public Curso() {
+    }
+
+    public Curso(String id, String nombreCurso, int horas, Profesor profesores, Aula aulas) {
         this.id = id;
-        this.nombre_curso = nombre_curso;
+        this.nombreCurso = nombreCurso;
         this.horas = horas;
         this.profesores = profesores;
         this.aulas = aulas;
@@ -50,12 +60,12 @@ public class Curso {
         this.id = id;
     }
 
-    public String getNombre_curso() {
-        return nombre_curso;
+    public String getNombreCurso() {
+        return nombreCurso;
     }
 
-    public void setNombre_curso(String nombre_curso) {
-        this.nombre_curso = nombre_curso;
+    public void setNombreCurso(String nombreCurso) {
+        this.nombreCurso = nombreCurso;
     }
 
     public int getHoras() {

@@ -1,5 +1,7 @@
 package com.example.centroformacion.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,6 +11,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "aulas")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Aula {
 
     @Id
@@ -21,6 +24,9 @@ public class Aula {
 
     @Column(name = "capacidad", nullable = false)
     private int capacidad;
+
+    public Aula() {
+    }
 
     public Aula(String id, String nombreAula, int capacidad) {
         this.id = id;

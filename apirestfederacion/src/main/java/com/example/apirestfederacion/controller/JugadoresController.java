@@ -62,7 +62,6 @@ public class JugadoresController {
     }
 
 
-
     @PutMapping("/jugadores/{jugadorId}/liberar")
     public ResponseEntity<Jugador> liberarJugador(@PathVariable String jugadorId) {
         return service.liberarJugador(jugadorId)
