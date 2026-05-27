@@ -1,7 +1,6 @@
 package com.example.centroformacion.entity;
 
-import java.util.UUID;
-
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,14 +12,19 @@ import jakarta.persistence.Table;
 public class Aula {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id = UUID.randomUUID().toString();
-    private String nombre;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id", length = 36, columnDefinition = "CHAR(36)")
+    private String id;
+
+    @Column(name = "nombre_aula", nullable = false)
+    private String nombreAula;
+
+    @Column(name = "capacidad", nullable = false)
     private int capacidad;
 
-    public Aula(String id, String nombre, int capacidad) {
+    public Aula(String id, String nombreAula, int capacidad) {
         this.id = id;
-        this.nombre = nombre;
+        this.nombreAula = nombreAula;
         this.capacidad = capacidad;
     }
 
@@ -32,12 +36,12 @@ public class Aula {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getNombreAula() {
+        return nombreAula;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombreAula(String nombreAula) {
+        this.nombreAula = nombreAula;
     }
 
     public int getCapacidad() {

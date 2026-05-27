@@ -8,4 +8,6 @@ import com.example.centroformacion.entity.Aula;
 @Repository
 public interface AulaRepository extends JpaRepository<Aula, String> {
 
+    
+
 }

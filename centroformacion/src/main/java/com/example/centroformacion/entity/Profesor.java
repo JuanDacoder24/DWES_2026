@@ -1,9 +1,9 @@
 package com.example.centroformacion.entity;
 
-import java.util.UUID;
-
-
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -14,12 +14,20 @@ import jakarta.persistence.Table;
 public class Profesor {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id = UUID.randomUUID().toString();
-     
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id", length = 36, columnDefinition = "CHAR(36)")
+    private String id;
+    
+    @Column(name = "nombre", nullable = false)
     private String nombre;
+
+    @Column(name = "apellido1", nullable = false)
     private String apellido1;
+
+    @Column(name = "apellido2", nullable = false)
     private String apellido2;
+    
+    @Enumerated(EnumType.STRING)    
     private Especialidad especialidad;
 
     public Profesor(String id, String nombre, String apellido1, String apellido2, Especialidad especialidad) {

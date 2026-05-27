@@ -1,7 +1,6 @@
 package com.example.centroformacion.entity;
 
-import java.util.UUID;
-
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -9,7 +8,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -18,17 +16,21 @@ import jakarta.persistence.Table;
 public class Curso {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id = UUID.randomUUID().toString();
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id", length = 36, columnDefinition = "CHAR(36)")
+    private String id;
 
+    @Column(name = "nombre_curso", nullable = false)
     private String nombre_curso;
+
+    @Column(name = "horas", nullable = false)
     private int horas;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "profesor_id", nullable = false)
     private Profesor profesores;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "aula_id", nullable = false)
     private Aula aulas;
 
